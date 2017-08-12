@@ -115,5 +115,29 @@ namespace CodeFirstDemo.Controllers
                 return View();
             }
         }
+
+        //Upload multiple images
+        public ActionResult MultipleUpload()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult MultipleUpload(string data)
+        {
+            var count = Request.Files.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                var file = Request.Files[i];
+
+                if (file != null)
+                {
+                    var filename = Path.GetFileName(file.FileName);
+                    var extension = Path.GetExtension(filename);
+                }
+            }
+            return View();
+        }
     }
 }
