@@ -42,16 +42,23 @@ namespace CodeFirstDemo.Controllers
             if (image1 != null && image1.ContentLength > 0)
             {
                 var name = System.IO.Path.GetFileName(image1.FileName);
-               
-                var path = "images/" + name;
+               // var e = System.IO.Path.GetExtension(image1.FileName);
+                var path = "images/" +name ;
 
-                image1.SaveAs(Server.MapPath("~/images/"+name));
+                image1.SaveAs(Server.MapPath("~/images/"+ name));
                 product.Picture= path;
-            }
-            db.Products.Add(product);
-            db.SaveChanges();
 
-            return RedirectToAction("Index");
+                db.Products.Add(product);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                Response.Write("Please select image");
+            }
+
+            return View("Create");
+
             //try
             //{
             //    // TODO: Add insert logic here
@@ -67,6 +74,7 @@ namespace CodeFirstDemo.Controllers
         // GET: Product/Edit/5
         public ActionResult Edit(int id)
         {
+            
             return View();
         }
 
