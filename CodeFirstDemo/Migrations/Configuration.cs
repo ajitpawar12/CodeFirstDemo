@@ -9,7 +9,8 @@ namespace CodeFirstDemo.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
             ContextKey = "CodeFirstDemo.Context.ProductContext";
         }
 

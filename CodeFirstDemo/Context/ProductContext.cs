@@ -9,6 +9,14 @@ namespace CodeFirstDemo.Context
 {
     public class ProductContext:DbContext
     {
+
         public DbSet<Product> Products { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            //modelBuilder.Entity<Blog>().Property(b => b._Tags).HasColumnName("Tags");
+            //modelBuilder.Entity<Blog>().Property(b => b._Owner).HasColumnName("Owner");
+        }
     }
 }
