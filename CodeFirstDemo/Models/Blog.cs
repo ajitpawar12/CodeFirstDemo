@@ -14,14 +14,11 @@ namespace CodeFirstDemo.Models
         public string Title { get; set; }
 
         public string _Tags { get; set; }
-
-        
         public string[] Tags
         {
             get { return _Tags == null ? null : JsonConvert.DeserializeObject<string[]>(_Tags); }
             set { _Tags = JsonConvert.SerializeObject(value); }
         }
-
         public string _Owner { get; set; }
         
         public Person[] Owner

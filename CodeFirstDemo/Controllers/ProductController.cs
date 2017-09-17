@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -23,7 +24,8 @@ namespace CodeFirstDemo.Controllers
         // GET: Product/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var productdetails = db.Products.Single(x => x.ProductId == id);
+            return View(productdetails);
         }
 
         // GET: Product/Create
@@ -42,9 +44,7 @@ namespace CodeFirstDemo.Controllers
             if (image1 != null && image1.ContentLength > 0)
             {
                 var name = System.IO.Path.GetFileName(image1.FileName);
-               // var e = System.IO.Path.GetExtension(image1.FileName);
                 var path = "images/" +name ;
-
                 image1.SaveAs(Server.MapPath("~/images/"+ name));
                 product.Picture= path;
 
@@ -56,64 +56,50 @@ namespace CodeFirstDemo.Controllers
             {
                 Response.Write("Please select image");
             }
-
-            return View("Create");
-
-            //try
-            //{
-            //    // TODO: Add insert logic here
-
-            //    return RedirectToAction("Index");
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
+            return RedirectToAction("Index","Product");
         }
 
         // GET: Product/Edit/5
         public ActionResult Edit(int id)
         {
+            var productdetails = db.Products.Single(x => x.ProductId == id);
             
-            return View();
+            return View(productdetails);
         }
 
         // POST: Product/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Product product, HttpPostedFileBase uploadimage)
         {
-            try
-            {
-                // TODO: Add update logic here
+            var editdetails = db.Products.Single(x => x.ProductId == product.ProductId);
+            var imagepath = product.Picture;
 
-                return RedirectToAction("Index");
-            }
-            catch
+            if (uploadimage != null&&uploadimage.ContentLength>0)
             {
-                return View();
+                var name = System.IO.Path.GetFileName(uploadimage.FileName);
+                var path = "images/" + name;
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+                uploadimage.SaveAs(Server.MapPath("~/images/" + name));
+                imagepath = path;
             }
+            editdetails.Description = product.Description;
+            editdetails.Name = product.Name;
+            editdetails.Price = product.Price;
+            editdetails.Picture = imagepath;
+            db.SaveChanges();
+            return RedirectToAction("Index","Product");
         }
 
         // GET: Product/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
-        }
-
-        // POST: Product/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var productdetails = db.Products.Single(x => x.ProductId == id);
+            db.Products.Remove(productdetails);
+            db.SaveChanges();
+            return RedirectToAction("Index", "Product");
         }
 
         //Upload multiple images
@@ -137,6 +123,12 @@ namespace CodeFirstDemo.Controllers
                     var extension = Path.GetExtension(filename);
                 }
             }
+            return View();
+        }
+
+        public ActionResult Productimages()
+        {
+
             return View();
         }
     }

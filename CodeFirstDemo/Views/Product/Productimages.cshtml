@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Productimages";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Productimages</h2>
+
+<div class="col-md-12">
+    <div id="addmorediv" class="col-md-3">
+        <div style="height: 200px; width: 100%; background-color: azure; padding: 5px; border: brown 1px solid">
+            <button id="btnadd" class="btn btn-primary">Add Files</button>
+        </div>
+    </div>
+    <div id="uploadimagediv0" class="col-md-3">
+        <div style="height: 200px; width: 100%; background-color: azure; padding: 5px; border: brown 1px solid">
+            <img style="padding: 5px; background-color: antiquewhite; height: 150px; width: 100%"/>
+        </div>
+        <div>
+            <input type="file" name="image0"/>
+        </div>
+    </div>
+    
+</div>
+@section scripts
+{
+    
+    <script>
+        var counter = 0;
+        $(document).ready(function() {
+
+            $("#btnadd").click(function() {
+                counter++;
+                $("#uploadimagediv0").append('<div id="uploadimagediv' + counter + '" class="col-md-3> <div style="height: 200px; width: 100%; background-color: azure; padding: 5px; border: brown 1px solid"><img style="padding: 5px; background-color: antiquewhite; height: 150px; width: 100%"/></div><div><input type="file" name="image'+counter+'"/></div> </div>');
+            });
+        });
+    </script>
+}

@@ -4,7 +4,6 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <h2>Index</h2>
 
 <p>
@@ -21,25 +20,26 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @foreach (var data in item.Owner)
-            {
-            <label>Name :</label>@Html.DisplayFor(modelItem =>data.Name)<br/>
-            <label>Surname :</label>@Html.DisplayFor(modelItem => data.Surname)<br/>
-            <label>Email :</label>@Html.DisplayFor(modelItem => data.Email)<br />
-            }
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BlogId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BlogId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.BlogId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @foreach (var data in item.Owner)
+                {
+                    <label>Name :</label>@Html.DisplayFor(modelItem =>data.Name)<br/>
+                    <label>Surname :</label>@Html.DisplayFor(modelItem => data.Surname)<br/>
+                    <label>Email :</label>@Html.DisplayFor(modelItem => data.Email)<br />
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.BlogId }) |
+                @Html.ActionLink("Details", "Details", new { id=item.BlogId }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.BlogId })
+            </td>
+        </tr>
+    }
 
 </table>
+
