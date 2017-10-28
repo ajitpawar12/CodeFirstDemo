@@ -43,20 +43,16 @@ namespace CodeFirstDemo.Controllers
             
             if (image1 != null && image1.ContentLength > 0)
             {
-                var name = System.IO.Path.GetFileName(image1.FileName);
+                var name = Path.GetFileName(image1.FileName);
                 var path = "images/" +name ;
                 image1.SaveAs(Server.MapPath("~/images/"+ name));
                 product.Picture= path;
-
                 db.Products.Add(product);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            else
-            {
-                Response.Write("Please select image");
-            }
-            return RedirectToAction("Index","Product");
+            ModelState.AddModelError("","Select image");
+            return View(product);
         }
 
         // GET: Product/Edit/5
@@ -130,6 +126,17 @@ namespace CodeFirstDemo.Controllers
         {
 
             return View();
+        }
+
+        public ActionResult LoadMoreData(int pageIndex,int pageSize)
+        {
+            System.Threading.Thread.Sleep(4000);
+            var query = (from c in db.Products
+                    orderby c.Name ascending
+                    select c)
+                .Skip(pageIndex * pageSize)
+                .Take(pageSize);
+            return Json(query.ToList(), JsonRequestBehavior.AllowGet);
         }
     }
 }

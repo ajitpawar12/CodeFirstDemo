@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "LoadMoreData";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="container"></div>
+<div id="progress" style="display:none">
+    <h4>Loading...</h4>
+</div>
+
+@section scripts
+{
+    <script>
+        var pageSize = 10;
+        var pageIndex = 0;
+
+        $(document).ready(function() {
+            GetData();
+
+            $(window).scroll(function() {
+                if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                    GetData();
+                }
+            });
+        });
+
+        function GetData() {
+            $.ajax({
+                type: 'GET',
+                url: 'Product/LoadMoreData',
+                data: { "pageIndex": pageIndex, "pageSize": pageSize },
+                datatype: 'json',
+                success: function(data) {
+                    if (data != null) {
+                        for (var i = 0; i < data.length; i++) {
+                            $("#container").append("<h2>" + data[i].Name + "</h2>");
+                        }
+                        pageIndex++;
+                    }
+                },
+                beforeSend: function() {
+                    $("#progress").show();
+                },
+                complete: function() {
+                    $("#progress").hide();
+                },
+                error: function() {
+                    alert("Error while retriving data !");
+                }
+            });
+        }
+    </script>
+
+}
