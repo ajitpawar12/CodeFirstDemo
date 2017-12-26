@@ -16,8 +16,6 @@ namespace CodeFirstDemo.Controllers
         // GET: Product
         public ActionResult Index()
         {
-            Product product=new Product();
-            
             return View(db.Products.ToList());
         }
 
@@ -132,7 +130,7 @@ namespace CodeFirstDemo.Controllers
         {
             System.Threading.Thread.Sleep(4000);
             var query = (from c in db.Products
-                    orderby c.Name ascending
+                    orderby c.ProductId ascending
                     select c)
                 .Skip(pageIndex * pageSize)
                 .Take(pageSize);
