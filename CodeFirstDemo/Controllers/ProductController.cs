@@ -42,7 +42,7 @@ namespace CodeFirstDemo.Controllers
             if (image1 != null && image1.ContentLength > 0)
             {
                 var name = Path.GetFileName(image1.FileName);
-                var path = "images/" +name ;
+                var path = "/images/" +name ;
                 image1.SaveAs(Server.MapPath("~/images/"+ name));
                 product.Picture= path;
                 db.Products.Add(product);
