@@ -11,7 +11,6 @@ namespace CodeFirstDemo.Migrations
         {
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
-            ContextKey = "CodeFirstDemo.Context.ProductContext";
         }
 
         protected override void Seed(CodeFirstDemo.Context.ProductContext context)
